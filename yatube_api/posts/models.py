@@ -1,13 +1,12 @@
 from django.contrib.auth import get_user_model
 from django.db import models
-from django.db.models import UniqueConstraint
 
 User = get_user_model()
 
 
 class Group(models.Model):
     title = models.CharField(max_length=200)
-    slug = models.SlugField(max_length=200, unique=True)
+    slug = models.SlugField(unique=True)
     description = models.TextField()
 
     def __str__(self):
@@ -16,18 +15,22 @@ class Group(models.Model):
 
 class Post(models.Model):
     text = models.TextField()
-    pub_date = models.DateTimeField('Дата публикации', auto_now_add=True)
+    pub_date = models.DateTimeField(
+        'Дата публикации', auto_now_add=True)
     author = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name='posts')
     image = models.ImageField(
         upload_to='posts/', null=True, blank=True)
     group = models.ForeignKey(
-        Group, on_delete=models.SET_NULL,
-        related_name="posts", blank=True, null=True
+        Group,
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='posts'
     )
 
     def __str__(self):
-        return self.text[:15]
+        return self.text
 
 
 class Comment(models.Model):
@@ -51,6 +54,3 @@ class Follow(models.Model):
         on_delete=models.CASCADE,
         related_name='following'
     )
-
-    class Meta:
-        UniqueConstraint(fields=['user', 'following'], name='unique_follow')

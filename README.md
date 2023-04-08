@@ -1,18 +1,23 @@
 # API for Yatube
-Allows to receive/send data in JSON format about:
-- Groups
-- Posts
-- Comments
-- Subscriptions
-- Get, update, check JWT tokens
+REST API for the Yatube project - a social network for reading and publishing posts and comments.
 
-Anonymous API requests are prohibited
+The API is only available to authenticated users. Authentication in the project is done using TokenAuthentication (JWT token authentication).
+
+Authenticated users are allowed to modify and delete their own content; otherwise, access is read-only.
+
+It works with all modules of the Yatube social network: posts, comments, groups, followers.
+
+Supports GET, POST, PUT, PATCH, DELETE methods.
+
+Provides data in JSON format.
+
+The full documentation (redoc.yaml) is available at http://localhost:8000/redoc/.
 
 ## Technologies:
 - python 3.9
 - Django 2.2
 - djangorestframework 3.12.4
-- PyJWT 2.1
+- Simple-JWT
 
 ## How to run the project:
 
